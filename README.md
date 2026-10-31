@@ -8,6 +8,19 @@
 
 > 只接收，不发射、不干扰。不同地区对无线电监测和隐私的规定不同，使用前请自行确认。
 
+![RF SCAN](docs/rf-scan.jpg)
+
+*RF SCAN 页面：ch1/6/11 的 PPS、噪声底、RSSI，按红黄绿显示强弱。*
+
+## 支持的硬件
+
+- **已验证**：ESP32-S3-DevKitC-1（双 USB-C、BOOT/RST、板载天线，16MB flash，无 PSRAM）
+- **兼容**：其他 ESP32-S3 开发板，3.3V 逻辑、至少 10 个可用 GPIO、320KB RAM；引脚在 `include/config.h` 里改
+- **屏幕**：ST7735S 128x160 SPI，8 针，3.3V；本机这块需要 `LCD_OFFSET_X=4, LCD_OFFSET_Y=0`，不同批次可能要 `(0,0)` 或 `(2,1)`
+- **按键**：4 个独立轻触按键，一端接 GPIO、一端接 GND；K1/K2/K3 必需，K4 可选
+- **不要用**：GPIO0/3/45/46（strapping）、GPIO19/20（USB）、GPIO26~37（flash/PSRAM，视模组而定）
+- 本项目默认使用 GPIO4/5/6/14（按键）和 GPIO7~12（屏幕）
+
 ## 硬件
 
 - ESP32-S3-DevKitC-1 公版（双 USB-C、BOOT/RST 两个按键、板载天线）
