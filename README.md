@@ -1,6 +1,5 @@
 # ESP32-S3 + ST7735S 手持 Remote ID 扫描器
 
-[![build](https://github.com/kaiwater/esp32-rid-scanner/actions/workflows/build.yml/badge.svg)](https://github.com/kaiwater/esp32-rid-scanner/actions/workflows/build.yml)
 [![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 被动接收无人机广播的 ASTM F3411 / OpenDroneID Remote ID（BLE + WiFi Beacon/NAN），
@@ -89,6 +88,8 @@ pio device monitor -e esp32s3
 - 标 `USB` 的口是芯片原生 USB，也可以刷机/看日志。
 
 代码会同时往 UART0 和 USB-CDC 输出日志，两个口都能看到。
+
+> 本仓库不提供预编译二进制，请按上面的 PlatformIO 命令自行编译烧录。
 
 ## 硬件测试固件行为
 
