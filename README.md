@@ -1,5 +1,8 @@
 # ESP32-S3 + ST7735S 手持 Remote ID 扫描器
 
+[![build](https://github.com/kaiwater/esp32-rid-scanner/actions/workflows/build.yml/badge.svg)](https://github.com/kaiwater/esp32-rid-scanner/actions/workflows/build.yml)
+[![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 被动接收无人机广播的 ASTM F3411 / OpenDroneID Remote ID（BLE + WiFi Beacon/NAN），
 在 1.8" ST7735S 屏幕上列出无人机 ID、RSSI、经纬度、高度、速度和操作员位置。
 
