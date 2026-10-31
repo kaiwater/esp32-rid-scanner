@@ -1,0 +1,9 @@
+ESP32-S3 Remote ID Scanner
+
+This project includes source files from the OpenDroneID Core C Library:
+  https://github.com/opendroneid/opendroneid-core-c
+  Copyright (C) 2019-2020 Intel Corporation
+  Licensed under the Apache License, Version 2.0.
+
+The files under lib/opendroneid/ retain their original copyright and
+license headers. See LICENSE for the Apache License, Version 2.0 text.
