@@ -140,8 +140,8 @@ WiFi Beacon 方式的 RID 标准使用 **2.4GHz 信道 6**；BLE RID 使用广�
 
 ## 相关工具（不在本仓库）
 
-开发调试时还用过两个独立的 ESP8266 固件：RID 测试发射端和 WiFi RSSI/噪声监视器。
-它们不属于这个 ESP32 扫描器仓库；需要时单独维护/烧录。
+- ESP8266 WiFi RSSI/PPS 监视器：https://github.com/kaiwater/esp8266-wifi-monitor
+- RID 测试发射端仅为本地调试工具，未发布。
 
 ## 参考项目
 
