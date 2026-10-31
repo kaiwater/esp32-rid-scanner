@@ -13,6 +13,10 @@ static void pushCanvas()
   if (gCanvasReady) gCanvas.pushSprite(0, 0);
 }
 
+#define RF_HIGH_NOISE  (-85)   // dBm
+#define RF_STRONG_RSSI (-50)   // dBm
+#define RF_HIGH_PPS    100     // packets/s
+
 // Traffic-light scale: green = strong signal / quiet noise,
 // yellow = medium, red = weak signal / high noise.
 static uint16_t rssiColor(int rssi)
@@ -121,20 +125,24 @@ void uiDrawRfScan(const RidWifiRfCh *stats, int currentIdx, int currentChannel, 
     snprintf(buf, sizeof(buf), "%2d", stats[i].channel);
     textAt(8, y, fg, bg, buf);
 
-    snprintf(buf, sizeof(buf), "%4lu", (unsigned long)stats[i].pps);
+    snprintf(buf, sizeof(buf), "%4lu%s", (unsigned long)stats[i].pps,
+             stats[i].pps >= RF_HIGH_PPS ? "*" : "");
     textAt(28, y, fg, bg, buf);
 
-    if (stats[i].noiseValid) snprintf(buf, sizeof(buf), "%4d", stats[i].noise);
+    if (stats[i].noiseValid) snprintf(buf, sizeof(buf), "%4d%s", stats[i].noise,
+                                      stats[i].noise > RF_HIGH_NOISE ? "*" : "");
     else snprintf(buf, sizeof(buf), "  --");
     textAt(66, y, stats[i].noiseValid ? noiseColor(stats[i].noise) : C_DIM, bg, buf);
 
-    if (stats[i].rssiValid) snprintf(buf, sizeof(buf), "%4d", stats[i].rssi);
+    if (stats[i].rssiValid) snprintf(buf, sizeof(buf), "%4d%s", stats[i].rssi,
+                                     stats[i].rssi >= RF_STRONG_RSSI ? "*" : "");
     else snprintf(buf, sizeof(buf), "  --");
     textAt(114, y, stats[i].rssiValid ? rssiColor(stats[i].rssi) : C_DIM, bg, buf);
   }
 
   textAt(4, 80, C_WARN, C_BG, "RID PAUSED");
   textAt(4, 92, C_DIM, C_BG, "PPS = packets/s");
+  textAt(4, 102, C_DIM, C_BG, "* = high noise/energy");
 
   footer("K3 CH  HOLD=BACK");
   pushCanvas();
@@ -156,7 +164,7 @@ void uiDrawList(const RidDrone *list, int count, int selected, uint32_t now)
   RidWifiRf rf;
   ridWifiGetRf(&rf);
   char nf[12];
-  if (rf.noiseValid) snprintf(nf, sizeof(nf), "NF%d", rf.noise);
+  if (rf.noiseValid) snprintf(nf, sizeof(nf), "NF%d%s", rf.noise, rf.noise > RF_HIGH_NOISE ? "*" : "");
   else snprintf(nf, sizeof(nf), "NF--");
   textAt(78, 3, rf.noiseValid ? noiseColor(rf.noise) : C_DIM, C_HEADER, nf);
 
@@ -190,7 +198,7 @@ void uiDrawList(const RidDrone *list, int count, int selected, uint32_t now)
       snprintf(l1, sizeof(l1), "%c%-12.12s", sel ? '>' : ' ', id);
       textAt(2, y + 2, fg, bg, l1);
 
-      snprintf(l1, sizeof(l1), "%4d", d.rssi);
+      snprintf(l1, sizeof(l1), "%4d%s", d.rssi, d.rssi >= RF_STRONG_RSSI ? "*" : "");
       textAt(84, y + 2, rssiColor(d.rssi), bg, l1);
 
       char l2[32];
@@ -253,7 +261,7 @@ void uiDrawDetail(const RidDrone &d, int index, int total, uint32_t now, int pag
     snprintf(buf, sizeof(buf), "SRC %s",
              d.source == RID_SOURCE_BLE ? "BLE" : "WiFi");
     textAt(2, y, C_SEL_FG, C_BG, buf);
-    snprintf(buf, sizeof(buf), "RSSI %d", d.rssi);
+    snprintf(buf, sizeof(buf), "RSSI %d%s", d.rssi, d.rssi >= RF_STRONG_RSSI ? "*" : "");
     textAt(78, y, rssiColor(d.rssi), C_BG, buf);
   } else if (page == 1) {
     textAt(2, y, C_DIM, C_BG, "OPERATOR ID"); y += step;
@@ -281,7 +289,7 @@ void uiDrawDetail(const RidDrone &d, int index, int total, uint32_t now, int pag
     snprintf(buf, sizeof(buf), "SRC %s",
              d.source == RID_SOURCE_BLE ? "BLE" : "WiFi");
     textAt(2, y, C_SEL_FG, C_BG, buf);
-    snprintf(buf, sizeof(buf), "RSSI %d", d.rssi);
+    snprintf(buf, sizeof(buf), "RSSI %d%s", d.rssi, d.rssi >= RF_STRONG_RSSI ? "*" : "");
     textAt(78, y, rssiColor(d.rssi), C_BG, buf);
   } else {
     RidWifiRf rf;
