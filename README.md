@@ -154,3 +154,7 @@ WiFi Beacon 方式的 RID 标准使用 **2.4GHz 信道 6**；BLE RID 使用广�
 - Android 接收参考：https://github.com/opendroneid/receiver-android
 
 本项目的 OpenDroneID 解析文件来自 opendroneid-core-c / Sky-Spy，遵循 Apache-2.0。
+
+## Changelog
+
+版本历史和详细记录见 [`CHANGELOG.md`](CHANGELOG.md) 与 [`changelogs/`](changelogs/)。
